@@ -5,6 +5,7 @@ import { Operator } from './FilterOperator';
 import { Order } from './Order';
 import { OrderBy } from './OrderBy';
 import { OrderType, OrderTypes } from './OrderType';
+import { FilterValueType } from './FilterValue';
 
 export {
 	Criteria,
@@ -15,4 +16,5 @@ export {
 	OrderType,
 	OrderTypes,
 	Operator,
+	FilterValueType,
 };

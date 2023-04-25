@@ -99,10 +99,12 @@ export class MongoCriteriaConverter {
 	}
 
 	private containsFilter(filter: Filter): MongoFilter {
-		return { [filter.field.value]: { $regex: filter.value.value } };
+		return { [filter.field.value]: { $regex: filter.value.value.toString() } };
 	}
 
 	private notContainsFilter(filter: Filter): MongoFilter {
-		return { [filter.field.value]: { $not: { $regex: filter.value.value } } };
+		return {
+			[filter.field.value]: { $not: { $regex: filter.value.value.toString() } },
+		};
 	}
 }

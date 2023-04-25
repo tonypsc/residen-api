@@ -34,7 +34,7 @@ export class MongoGenericRepository<T extends AggregateRoot>
 	}
 
 	async get<Dto>(
-		filtersMap: Map<string, string>[],
+		filtersMap: Record<string, string>[],
 		orderBy: string,
 		orderType: OrderTypes,
 		skip?: number,
@@ -51,7 +51,7 @@ export class MongoGenericRepository<T extends AggregateRoot>
 		);
 	}
 
-	async getOne<Dto>(filtersMap: Map<string, string>[]): Promise<Dto> {
+	async getOne<Dto>(filtersMap: Record<string, string>[]): Promise<Dto> {
 		const filters = Filters.fromValues(filtersMap);
 		const result = await this.findOne<Dto>(new Criteria(filters, Order.none()));
 		if (!result) throw new NotFoundException();

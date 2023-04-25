@@ -1,4 +1,4 @@
-type Primitives = String | string | number | Boolean | boolean | Date;
+export type Primitives = String | string | number | Boolean | boolean | Date;
 
 abstract class ValueObject<T extends Primitives> {
 	readonly value: T;

@@ -5,6 +5,7 @@ import {
 	OrderBy,
 	OrderType,
 	OrderTypes,
+	FilterValueType,
 } from '../../../shared/domain/criteria';
 import { NotFoundException } from '../../../shared/domain';
 import { MongoRepository } from '../../../shared/infrastructure/persistance/MongoRepository';
@@ -25,7 +26,7 @@ export class MongoUserRepository
 	}
 
 	async get(
-		filtersMap: Map<string, string>[],
+		filtersMap: Record<string, FilterValueType>[],
 		orderBy: string,
 		orderType: OrderTypes,
 		skip?: number,
@@ -43,7 +44,7 @@ export class MongoUserRepository
 		return results.map((dto) => User.fromDto(dto));
 	}
 
-	async getOne(filtersMap: Map<string, string>[]) {
+	async getOne(filtersMap: Record<string, FilterValueType>[]) {
 		const filters = Filters.fromValues(filtersMap);
 		const result = await this.findOne<UserDto>(
 			new Criteria(filters, Order.none())

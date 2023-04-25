@@ -21,14 +21,14 @@ describe('Invoke', () => {
 		expect(result?.[0].toPrimitives().name).toBe('test-name');
 	});
 
-	// test('should return greater than 0 for inactive status', async () => {
-	// 	const userFinder = new UserFinder(
-	// 		mongoUserRepository,
-	// 		undefined,
-	// 		undefined,
-	// 		UserPosibleStatus.inactive.toString()
-	// 	);
-	// 	const result = await userFinder.invoke();
-	// 	expect(result?.length).toBeGreaterThan(0);
-	// });
+	test('should return greater than 0 for inactive status', async () => {
+		const userFinder = new UserFinder(
+			mongoUserRepository,
+			undefined,
+			undefined,
+			UserPosibleStatus.inactive
+		);
+		const result = await userFinder.invoke();
+		expect(result?.length).toBeGreaterThan(0);
+	});
 });
