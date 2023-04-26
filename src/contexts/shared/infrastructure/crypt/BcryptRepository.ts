@@ -7,6 +7,10 @@ class BcryptRepository implements CryptRepository {
 		const salt = bcrypt.genSaltSync(10);
 		return bcrypt.hashSync(password, salt);
 	}
+
+	compare(value: string, hash: string): Promise<boolean> {
+		return bcrypt.compare(value, hash);
+	}
 }
 
 export { BcryptRepository };

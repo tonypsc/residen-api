@@ -30,17 +30,16 @@ class UserLogin {
 			operator: '=',
 			value: this._email.value,
 		});
-		this._filter.push({
-			field: 'password',
-			operator: '=',
-			value: this._cryptRepository.generateHash(this._password.value),
-		});
 	}
 
 	async invoke() {
 		try {
-			const result = await this.userRepository.getOne(this._filter);
-			if (result) return true;
+			const user = await this.userRepository.getOne(this._filter);
+			const result = await this._cryptRepository.compare(
+				this._password.value,
+				user?.toPrimitives().password!
+			);
+			return result;
 		} catch (error) {
 			return false;
 		}

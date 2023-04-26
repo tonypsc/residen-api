@@ -65,4 +65,15 @@ describe('Invoke', () => {
 		const result = await userLogin.invoke();
 		expect(result).toBe(false);
 	});
+
+	test('should return (true) for right credentials', async () => {
+		const userLogin = new UserLogin(
+			mongoUserRepository,
+			bcryptRepository,
+			'tony402@gmail.com',
+			'123456'
+		);
+		const result = await userLogin.invoke();
+		expect(result).toBe(true);
+	});
 });
