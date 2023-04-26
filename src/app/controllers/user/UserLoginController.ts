@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { UserLogin } from '../../../contexts/user/application';
 import { MongoUserRepository } from '../../../contexts/user/infrastructure/persistance/MongoUserRepository';
 import { BcryptRepository } from '../../../contexts/shared/infrastructure/crypt/BcryptRepository';
+import { JwtAuthorization } from '../../middleware/JwtAuthorization';
 
 class UserLoginController {
 	async run(req: Request, res: Response) {
@@ -17,14 +18,17 @@ class UserLoginController {
 				password
 			);
 
-			const result = await userLogin.invoke();
+			const user = await userLogin.invoke();
 
 			res.json({
 				status: 'ok',
-				data: result,
+				data: {
+					user: user?.toClient(),
+					token: JwtAuthorization.generateToken(user?.toClient()._id!),
+				},
 			});
 		} catch (error) {
-			res.status(400).json({
+			res.status(401).json({
 				status: 'error',
 				message: error instanceof Error ? error.message : JSON.stringify(error),
 			});

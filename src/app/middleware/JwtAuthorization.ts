@@ -3,26 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 
 class JwtAuthorization {
 	static generateToken(payload: string) {
-		const token = jwt.sign(payload, process.env.SECRET!, {
+		const token = jwt.sign({ _id: payload }, process.env.SECRET!, {
 			expiresIn: '180000s',
 		});
 		return token;
 	}
 
 	static authenticateToken(req: Request, res: Response, next: NextFunction) {
-		const excludedPaths = [
-			'/login',
-			'/recoverpwd',
-			'/setpwd',
-			'/uploads',
-			'/register',
-			'/confirmregister',
-			'/resendconfirmation',
-			'/newmessage',
-			'/userexists',
-			'/karaoke/search',
-			'/karaoke/getone',
-		];
+		const excludedPaths = ['/login'];
 
 		for (const path of excludedPaths) {
 			if (req.originalUrl.includes(path)) {

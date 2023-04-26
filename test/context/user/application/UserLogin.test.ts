@@ -1,7 +1,11 @@
+import { BcryptRepository } from '../../../../src/contexts/shared/infrastructure/crypt/BcryptRepository';
+import {
+	AuthorizationException,
+	InvalidArgumentError,
+} from '../../../../src/contexts/shared/domain';
+
 import { UserLogin } from '../../../../src/contexts/user/application';
 import { MongoUserRepository } from '../../../../src/contexts/user/infrastructure/persistance/MongoUserRepository';
-import { BcryptRepository } from '../../../../src/contexts/shared/infrastructure/crypt/BcryptRepository';
-import { InvalidArgumentError } from '../../../../src/contexts/shared/domain';
 
 const mongoUserRepository = new MongoUserRepository();
 const bcryptRepository = new BcryptRepository();
@@ -55,25 +59,48 @@ describe('Invoke', () => {
 		}
 	});
 
-	test('should return (false) for wrong credentials', async () => {
-		const userLogin = new UserLogin(
-			mongoUserRepository,
-			bcryptRepository,
-			'some@badcredential.com',
-			'somebadpassword'
-		);
-		const result = await userLogin.invoke();
-		expect(result).toBe(false);
+	test('should throw (No user found) for wrong email', async () => {
+		try {
+			const userLogin = new UserLogin(
+				mongoUserRepository,
+				bcryptRepository,
+				'some@badcredential.com',
+				'somebadpassword'
+			);
+			const result = await userLogin.invoke();
+		} catch (error) {
+			expect(error).toBeInstanceOf(Error);
+			if (error instanceof Error) {
+				expect(error.message).toBe('No user found');
+			}
+		}
 	});
 
-	test('should return (true) for right credentials', async () => {
+	test('should throw (Invalid credentials) for wrong password', async () => {
+		try {
+			const userLogin = new UserLogin(
+				mongoUserRepository,
+				bcryptRepository,
+				'tony402@gmail.com',
+				'somebadpassword'
+			);
+			const result = await userLogin.invoke();
+		} catch (error) {
+			expect(error).toBeInstanceOf(Error);
+			if (error instanceof Error) {
+				expect(error.message).toBe('Invalid credentials');
+			}
+		}
+	});
+
+	test('should return (user) for right credentials', async () => {
 		const userLogin = new UserLogin(
 			mongoUserRepository,
 			bcryptRepository,
 			'tony402@gmail.com',
 			'123456'
 		);
-		const result = await userLogin.invoke();
-		expect(result).toBe(true);
+		const user = await userLogin.invoke();
+		expect(user?.toClient().email).toBe('tony402@gmail.com');
 	});
 });
