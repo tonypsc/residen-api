@@ -11,6 +11,6 @@ export interface UserRepository {
 		skip?: number,
 		limit?: number
 	): Promise<User[]>;
-	getOne(filtersMap: Record<string, string>[]): Promise<User | null>;
+	getOne(filtersMap: Record<string, FilterValueType>[]): Promise<User | null>;
 	// delete(userId: number): Promise<void>;
 }
