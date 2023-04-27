@@ -38,15 +38,19 @@ class UserRecoverLinkCreator {
 			user?.toPrimitives()._id!
 		);
 
-		if (!user) throw new NotFoundException('User not found');
+		if (user) {
+			// Send the mail
+			//TODO: pass language aware message
+			await this._mailRepository.sendMail(this._email.value);
 
-		// Send the mail
-		await this._mailRepository.sendMail(this._email.value);
-
-		// Update user recover link field
-		const dtoUser = user.toPrimitives();
-		dtoUser.recoverLink = recoverLink;
-		dtoUser.recoverLinkDate = new Date().getTime();
-		this._userRepository.save(User.fromDto(dtoUser));
+			// Update user recover link field
+			const dtoUser = user.toPrimitives();
+			dtoUser.recoverLink = recoverLink;
+			dtoUser.recoverLinkDate = new Date().getTime();
+			await this._userRepository.save(User.fromDto(dtoUser));
+			return dtoUser;
+		}
 	}
 }
+
+export { UserRecoverLinkCreator };

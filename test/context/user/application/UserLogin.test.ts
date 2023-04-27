@@ -1,8 +1,5 @@
 import { BcryptRepository } from '../../../../src/contexts/shared/infrastructure/crypt/BcryptRepository';
-import {
-	AuthorizationException,
-	InvalidArgumentError,
-} from '../../../../src/contexts/shared/domain';
+import { InvalidArgumentError } from '../../../../src/contexts/shared/domain';
 
 import { UserLogin } from '../../../../src/contexts/user/application';
 import { MongoUserRepository } from '../../../../src/contexts/user/infrastructure/persistance/MongoUserRepository';

@@ -1,31 +1,38 @@
 import { Request, Response } from 'express';
 
-import { UserLogin } from '../../../contexts/user/application';
+import { UserRecoverLinkCreator } from '../../../contexts/user/application';
 import { MongoUserRepository } from '../../../contexts/user/infrastructure/persistance/MongoUserRepository';
-import { BcryptRepository } from '../../../contexts/shared/infrastructure/crypt/BcryptRepository';
-import { JwtAuthorization } from '../../middleware/JwtAuthorization';
+import { BcryptRepository } from '../../../contexts/shared/infrastructure';
+import { NodeMailerRepository } from '../../../contexts/shared/infrastructure';
+
+import { config } from '../../../config';
 
 class UserGenerateRecoverLinkController {
 	async run(req: Request, res: Response) {
 		try {
-			const { email, password } = req.body;
+			const { email } = req.body;
 			const mongoUserRepository = new MongoUserRepository();
 			const bcryptRepository = new BcryptRepository();
-			const userLogin = new UserLogin(
-				mongoUserRepository,
-				bcryptRepository,
-				email,
-				password
+			const mailRepository = new NodeMailerRepository(
+				config.sendMails,
+				config.mailHost,
+				parseInt(config.mailPort),
+				config.mailUser,
+				config.mailPassword
 			);
 
-			const user = await userLogin.invoke();
+			const userRecoverLinkCreator = new UserRecoverLinkCreator(
+				mongoUserRepository,
+				mailRepository,
+				bcryptRepository,
+				email
+			);
+
+			await userRecoverLinkCreator.invoke();
 
 			res.json({
 				status: 'ok',
-				data: {
-					user: user?.toClient(),
-					token: JwtAuthorization.generateToken(user?.toClient()._id!),
-				},
+				data: {},
 			});
 		} catch (error) {
 			res.status(401).json({

@@ -61,6 +61,6 @@ export abstract class MongoRepository<T extends AggregateRoot> {
 			{ upsert: true }
 		);
 
-		return result.upsertedId.toString();
+		return result.upsertedId ? result.upsertedId.toString() : id;
 	}
 }

@@ -50,7 +50,7 @@ export class MongoUserRepository
 			new Criteria(filters, Order.none())
 		);
 		if (!result) throw new NotFoundException('user');
-		return result ? User.fromDto(result) : null;
+		return User.fromDto(result);
 	}
 
 	async getById(id: string) {
