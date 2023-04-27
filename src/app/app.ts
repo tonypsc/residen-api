@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import routes from './routes';
-import { error404Handler, errorHandler } from './middleware/index';
+import { error404Handler, errorHandler } from './middleware';
 import cors from 'cors';
 
 // Initializations

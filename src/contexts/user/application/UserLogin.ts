@@ -7,7 +7,7 @@ import { UserEmail } from '../domain/UserEmail';
 import { UserPassword } from '../domain/UserPassword';
 
 class UserLogin {
-	userRepository: UserRepository;
+	private userRepository: UserRepository;
 	private _emailFilter: Record<string, FilterValueType>;
 	private _cryptRepository: CryptRepository;
 	private _email: UserEmail;

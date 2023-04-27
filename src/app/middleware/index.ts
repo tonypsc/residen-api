@@ -5,7 +5,7 @@ const SERVER_ERROR = 500;
 
 export function error404Handler(req: Request, res: Response, next: Function) {
 	next(createError(NOT_FOUND));
-	//res.status(404).send('Not found');
+	res.status(404).send('Not found');
 }
 
 export function errorHandler(err: any, req: Request, res: Response) {
