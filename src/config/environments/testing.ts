@@ -5,6 +5,7 @@ const environment: ConfigType = {
 	forcePasswordStrength: true,
 	recoverLinkExpiration: process.env.RECOVER_LINK_EXPIRATION,
 	confirmationLinkExpiration: process.env.CONFIRMATION_LINK_EXPIRATION,
+	captchaEnabled: false,
 };
 
 export { environment };

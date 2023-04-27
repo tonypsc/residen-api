@@ -3,4 +3,7 @@ export type ConfigType = {
 	forcePasswordStrength?: boolean;
 	recoverLinkExpiration?: string;
 	confirmationLinkExpiration?: string;
+	captchaEnabled?: boolean;
+	captchaSecret?: string;
+	googleApiKey?: string;
 };
