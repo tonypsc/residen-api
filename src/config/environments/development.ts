@@ -12,7 +12,7 @@ const environment: ConfigType = {
 	mailUser: process.env.MAIL_USER ?? 'admin',
 	mailPassword: process.env.MAIL_PWD ?? '',
 	mailPort: process.env.MAIL_PORT ?? '25',
-	sendMails: true,
+	sendMails: false,
 };
 
 export { environment };
