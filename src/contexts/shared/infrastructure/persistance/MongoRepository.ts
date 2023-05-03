@@ -40,8 +40,6 @@ export abstract class MongoRepository<T extends AggregateRoot> {
 		const collection = this.collection();
 		const query = this._criteriaConverter.convert(criteria);
 
-		console.log(query.filter);
-
 		return await collection.findOne<D>(query.filter);
 	}
 

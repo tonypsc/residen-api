@@ -40,6 +40,8 @@ class NodeMailerRepository implements MailRepository {
 			},
 		};
 
+		console.log(nodemailerOptions);
+
 		const transporter = nodemailer.createTransport({
 			...nodemailerOptions,
 		});

@@ -10,7 +10,7 @@ const environment: ConfigType = {
 	googleApiKey: process.env.GOOGLE_API_KEY,
 	mailHost: process.env.MAIL_HOST ?? 'localhost',
 	mailUser: process.env.MAIL_USER ?? 'admin',
-	mailPassword: process.env.MAIL_PASSWORD ?? '',
+	mailPassword: process.env.MAIL_PWD ?? '',
 	mailPort: process.env.MAIL_PORT ?? '25',
 	sendMails: true,
 };

@@ -32,7 +32,6 @@ class UserGenerateRecoverLinkController {
 
 			res.json({
 				status: 'ok',
-				data: {},
 			});
 		} catch (error) {
 			res.status(401).json({
