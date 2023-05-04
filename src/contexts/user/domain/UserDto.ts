@@ -4,8 +4,6 @@ interface UserDto {
 	email: string;
 	password: string;
 	status?: number;
-	confirmationLink?: string;
-	confirmationLinkDate?: number;
 	avatar?: string;
 	deleted?: boolean;
 }

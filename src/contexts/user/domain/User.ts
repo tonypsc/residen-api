@@ -5,8 +5,6 @@ import { UserId } from './UserId';
 import { UserEmail } from './UserEmail';
 import { UserPassword } from './UserPassword';
 import { UserPosibleStatus, UserStatus } from './UserStatus';
-import { UserConfirmationLink } from './UserConfirmationLink';
-import { UserConfirmationLinkDate } from './UserConfirmationLinkDate';
 import { UserDto } from './UserDto';
 import { UserAvatar } from './UserAvatar';
 
@@ -16,8 +14,6 @@ class User extends AggregateRoot {
 	private _email: UserEmail;
 	private _password: UserPassword;
 	private _status?: UserStatus;
-	private _confirmationLink?: UserConfirmationLink;
-	private _confirmationLinkDate?: UserConfirmationLinkDate;
 	private _avatar?: UserAvatar;
 
 	constructor(
@@ -26,8 +22,6 @@ class User extends AggregateRoot {
 		email: UserEmail,
 		password: UserPassword,
 		status?: UserStatus,
-		confirmationLink?: UserConfirmationLink,
-		confirmationLinkDate?: UserConfirmationLinkDate,
 		avatar?: UserAvatar
 	) {
 		super();
@@ -36,8 +30,6 @@ class User extends AggregateRoot {
 		this._email = email;
 		this._password = password;
 		this._status = status ?? new UserStatus(UserPosibleStatus.inactive);
-		this._confirmationLink = confirmationLink;
-		this._confirmationLinkDate = confirmationLinkDate;
 		this._avatar = avatar;
 	}
 
@@ -64,12 +56,6 @@ class User extends AggregateRoot {
 			new UserEmail(dto.email),
 			new UserPassword(dto.password),
 			new UserStatus(dto.status),
-			dto.confirmationLink
-				? new UserConfirmationLink(dto.confirmationLink)
-				: undefined,
-			dto.confirmationLinkDate
-				? new UserConfirmationLinkDate(dto.confirmationLinkDate)
-				: undefined,
 			dto.avatar ? new UserAvatar(dto.avatar) : undefined
 		);
 	}
@@ -81,8 +67,6 @@ class User extends AggregateRoot {
 			email: this._email.toString(),
 			password: this._password?.toString(),
 			status: this._status?.value,
-			confirmationLink: this._confirmationLink?.toString(),
-			confirmationLinkDate: this._confirmationLinkDate?.value,
 			avatar: this._avatar?.value,
 		};
 	}
