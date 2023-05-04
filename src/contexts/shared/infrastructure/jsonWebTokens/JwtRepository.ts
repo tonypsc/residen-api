@@ -6,12 +6,14 @@ class JwtRepository implements JsonWebTokenRepository {
 	private _secret: string;
 
 	constructor(secret: string) {
-		this.validateSecret(secret);
 		this._secret = secret;
+		this.validateSecret();
 	}
 
-	private validateSecret(secret: string) {
-		if (!secret) throw new InvalidArgumentError('Wrong secret key');
+	private validateSecret() {
+		if (!this._secret) {
+			throw new InvalidArgumentError('Wrong secret key');
+		}
 	}
 
 	generate(payload: string, expiration: string = '86400'): string {
@@ -28,7 +30,7 @@ class JwtRepository implements JsonWebTokenRepository {
 				if (err) reject(err);
 				if (!data) reject('Wrong token');
 
-				resolve(data?.toString() ?? '');
+				resolve((data as jwt.JwtPayload)._id);
 			});
 		});
 	}

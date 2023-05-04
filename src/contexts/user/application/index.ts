@@ -4,6 +4,7 @@ import { UserFinder } from './UserFinder';
 import { UserGetById } from './UserGetById';
 import { UserLogin } from './UserLogin';
 import { UserRecoverLinkCreator } from './UserRecoverLinkCreator';
+import { UserVerifyRecoverLink } from './UserVerifyRecoverLink';
 
 export {
 	UserCreator,
@@ -12,4 +13,5 @@ export {
 	UserGetById,
 	UserLogin,
 	UserRecoverLinkCreator,
+	UserVerifyRecoverLink,
 };
