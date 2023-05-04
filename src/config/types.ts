@@ -1,10 +1,11 @@
 export type ConfigType = {
 	dbHostName?: string;
 	forcePasswordStrength?: boolean;
-	recoverLinkExpiration?: string;
+	recoverLinkExpiration: string;
 	confirmationLinkExpiration?: string;
 	captchaEnabled?: boolean;
 	captchaSecret?: string;
+	jwtSecret: string;
 	googleApiKey?: string;
 	mailHost: string;
 	mailUser: string;

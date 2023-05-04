@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { UserRecoverLinkCreator } from '../../../contexts/user/application';
 import { MongoUserRepository } from '../../../contexts/user/infrastructure/persistance/MongoUserRepository';
-import { BcryptRepository } from '../../../contexts/shared/infrastructure';
+import { JwtRepository } from '../../../contexts/shared/infrastructure/jsonWebTokens/JwtRepository';
 import { NodeMailerRepository } from '../../../contexts/shared/infrastructure';
 
 import { config } from '../../../config';
@@ -12,7 +12,7 @@ class UserGenerateRecoverLinkController {
 		try {
 			const { email } = req.body;
 			const mongoUserRepository = new MongoUserRepository();
-			const bcryptRepository = new BcryptRepository();
+			const jwtRepository = new JwtRepository(config.jwtSecret!);
 			const mailRepository = new NodeMailerRepository(
 				config.sendMails,
 				config.mailHost,
@@ -24,8 +24,9 @@ class UserGenerateRecoverLinkController {
 			const userRecoverLinkCreator = new UserRecoverLinkCreator(
 				mongoUserRepository,
 				mailRepository,
-				bcryptRepository,
-				email
+				jwtRepository,
+				email,
+				config.recoverLinkExpiration
 			);
 
 			await userRecoverLinkCreator.invoke();

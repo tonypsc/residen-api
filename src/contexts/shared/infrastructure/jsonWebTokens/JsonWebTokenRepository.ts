@@ -1,4 +1,4 @@
 interface JsonWebTokenRepository {
-	generate(value: string): string;
-	authenticate(value: string): boolean;
+	generate(payload: string, expiration: string): string;
+	authenticate(value: string): Promise<string>;
 }
