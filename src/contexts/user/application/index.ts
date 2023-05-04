@@ -5,6 +5,7 @@ import { UserGetById } from './UserGetById';
 import { UserLogin } from './UserLogin';
 import { UserRecoverLinkCreator } from './UserRecoverLinkCreator';
 import { UserVerifyRecoverLink } from './UserVerifyRecoverLink';
+import { UserRecoverPassword } from './UserRecoverPassword';
 
 export {
 	UserCreator,
@@ -14,4 +15,5 @@ export {
 	UserLogin,
 	UserRecoverLinkCreator,
 	UserVerifyRecoverLink,
+	UserRecoverPassword,
 };

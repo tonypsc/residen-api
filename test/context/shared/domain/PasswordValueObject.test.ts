@@ -27,4 +27,15 @@ describe('constructor', () => {
 			}
 		}
 	});
+
+	test('should return (Password and confirmation do not match) for diferent pass and confirm', () => {
+		try {
+			const pValue = new PasswordValue('Password123', false, 'another');
+		} catch (error) {
+			expect(error).toBeInstanceOf(InvalidArgumentError);
+			if (error instanceof InvalidArgumentError) {
+				expect(error.message).toBe('Password and confirmation do not match');
+			}
+		}
+	});
 });
