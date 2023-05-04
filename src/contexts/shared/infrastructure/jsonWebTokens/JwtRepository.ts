@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { InvalidArgumentError } from '../../domain';
+import { JsonWebTokenRepository } from './JsonWebTokenRepository';
 
 class JwtRepository implements JsonWebTokenRepository {
 	private _secret: string;
