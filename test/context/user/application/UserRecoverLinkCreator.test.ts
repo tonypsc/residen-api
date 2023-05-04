@@ -78,25 +78,7 @@ describe('Invoke', () => {
 			'tony402@gmail.com',
 			config.recoverLinkExpiration
 		);
-		const user = await userRecoverLinkCreator.invoke();
-		expect(user?.recoverLink).toBeDefined();
-		expect(user?.recoverLinkDate).toBeDefined();
+		const result = await userRecoverLinkCreator.invoke();
+		expect(result).toBe(true);
 	});
-
-	// test('should return user with link for ok email', async () => {
-	// 	try {
-	// 		const userRecoverLinkCreator = new UserRecoverLinkCreator(
-	// 			mongoUserRepository,
-	// 			mailRepository,
-	// 			bcryptRepository,
-	// 			'some@okemail.com'
-	// 		);
-
-	// 	} catch (error) {
-	// 		expect(error).toBeInstanceOf(InvalidArgumentError);
-	// 		if (error instanceof InvalidArgumentError) {
-	// 			expect(error.message).toBe('Invalid email address');
-	// 		}
-	// 	}
-	// });
 });

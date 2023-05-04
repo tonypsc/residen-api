@@ -74,6 +74,6 @@ describe('invoke', () => {
 			generatedToken
 		);
 		const result = await userVerifyRecoverLink.invoke();
-		expect(result).toBe(true);
+		expect(result).toBe('1c388a3e-da4f-4145-a938-b4f9a80107b2');
 	});
 });

@@ -1,13 +1,19 @@
 import { StringValueObject } from './StringValueObject';
-import { config } from '../../../config';
 import { InvalidArgumentError } from './exceptions/InvalidArgumentError';
 
 abstract class PasswordValueObject extends StringValueObject {
-	constructor(password: string, checkStrength?: boolean) {
+	constructor(
+		password: string,
+		checkStrength: boolean = false,
+		confirm?: string
+	) {
 		super(password);
 		this.checkEmptyPassword(password);
 		if (checkStrength) {
 			this.checkPasswordStrength(password);
+		}
+		if (confirm) {
+			this.checkConfirmMatch(password, confirm);
 		}
 	}
 
@@ -26,11 +32,14 @@ abstract class PasswordValueObject extends StringValueObject {
 	}
 
 	protected checkPasswordStrength(password: string) {
-		if (config.forcePasswordStrength) {
-			if (!PasswordValueObject.checkStrength(password)) {
-				throw new InvalidArgumentError('Password too weak');
-			}
+		if (!PasswordValueObject.checkStrength(password)) {
+			throw new InvalidArgumentError('Password too weak');
 		}
+	}
+
+	protected checkConfirmMatch(password: string, confirm: string) {
+		if (password !== confirm)
+			throw new InvalidArgumentError('Password and confirmation do not match');
 	}
 }
 

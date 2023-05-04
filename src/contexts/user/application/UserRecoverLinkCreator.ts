@@ -46,13 +46,7 @@ class UserRecoverLinkCreator {
 			// Send the mail
 			//TODO: pass language aware message
 			await this._mailRepository.sendMail(this._email.value);
-
-			// Update user recover link field
-			const dtoUser = user.toPrimitives();
-			dtoUser.recoverLink = recoverLink;
-			dtoUser.recoverLinkDate = new Date().getTime();
-			await this._userRepository.save(User.fromDto(dtoUser));
-			return dtoUser;
+			return true;
 		}
 	}
 }

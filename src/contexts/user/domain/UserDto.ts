@@ -6,8 +6,6 @@ interface UserDto {
 	status?: number;
 	confirmationLink?: string;
 	confirmationLinkDate?: number;
-	recoverLink?: string;
-	recoverLinkDate?: number;
 	avatar?: string;
 	deleted?: boolean;
 }

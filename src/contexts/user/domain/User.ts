@@ -6,9 +6,7 @@ import { UserEmail } from './UserEmail';
 import { UserPassword } from './UserPassword';
 import { UserPosibleStatus, UserStatus } from './UserStatus';
 import { UserConfirmationLink } from './UserConfirmationLink';
-import { UserRecoverLink } from './UserRecoverLink';
 import { UserConfirmationLinkDate } from './UserConfirmationLinkDate';
-import { UserRecoverLinkDate } from './UserRecoverLinkDate';
 import { UserDto } from './UserDto';
 import { UserAvatar } from './UserAvatar';
 
@@ -19,9 +17,7 @@ class User extends AggregateRoot {
 	private _password: UserPassword;
 	private _status?: UserStatus;
 	private _confirmationLink?: UserConfirmationLink;
-	private _recoverLink?: UserRecoverLink;
 	private _confirmationLinkDate?: UserConfirmationLinkDate;
-	private _recoverLinkDate?: UserRecoverLinkDate;
 	private _avatar?: UserAvatar;
 
 	constructor(
@@ -32,8 +28,6 @@ class User extends AggregateRoot {
 		status?: UserStatus,
 		confirmationLink?: UserConfirmationLink,
 		confirmationLinkDate?: UserConfirmationLinkDate,
-		recoverLink?: UserRecoverLink,
-		recoverLinkDate?: UserRecoverLinkDate,
 		avatar?: UserAvatar
 	) {
 		super();
@@ -44,8 +38,6 @@ class User extends AggregateRoot {
 		this._status = status ?? new UserStatus(UserPosibleStatus.inactive);
 		this._confirmationLink = confirmationLink;
 		this._confirmationLinkDate = confirmationLinkDate;
-		this._recoverLink = recoverLink;
-		this._recoverLinkDate = recoverLinkDate;
 		this._avatar = avatar;
 	}
 
@@ -78,10 +70,6 @@ class User extends AggregateRoot {
 			dto.confirmationLinkDate
 				? new UserConfirmationLinkDate(dto.confirmationLinkDate)
 				: undefined,
-			dto.recoverLink ? new UserRecoverLink(dto.recoverLink) : undefined,
-			dto.recoverLinkDate
-				? new UserRecoverLinkDate(dto.recoverLinkDate)
-				: undefined,
 			dto.avatar ? new UserAvatar(dto.avatar) : undefined
 		);
 	}
@@ -95,8 +83,6 @@ class User extends AggregateRoot {
 			status: this._status?.value,
 			confirmationLink: this._confirmationLink?.toString(),
 			confirmationLinkDate: this._confirmationLinkDate?.value,
-			recoverLink: this._recoverLink?.toString(),
-			recoverLinkDate: this._recoverLinkDate?.value,
 			avatar: this._avatar?.value,
 		};
 	}

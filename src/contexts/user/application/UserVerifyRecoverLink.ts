@@ -25,7 +25,7 @@ class UserVerifyRecoverLink {
 		// verify user exists
 		await userGetById.invoke();
 
-		return true;
+		return userId;
 	}
 }
 
