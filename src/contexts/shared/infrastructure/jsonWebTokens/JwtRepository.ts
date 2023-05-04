@@ -1,13 +1,20 @@
 import jwt from 'jsonwebtoken';
+import { InvalidArgumentError } from '../../domain';
 
 class JwtRepository implements JsonWebTokenRepository {
 	private _secret: string;
 
 	constructor(secret: string) {
+		this.validateSecret(secret);
 		this._secret = secret;
 	}
 
+	private validateSecret(secret: string) {
+		if (!secret) throw new InvalidArgumentError('Wrong secret key');
+	}
+
 	generate(payload: string, expiration: string = '86400'): string {
+		if (!payload) throw new InvalidArgumentError('Wrong payload');
 		const token = jwt.sign({ _id: payload }, this._secret, {
 			expiresIn: `${expiration}s`,
 		});

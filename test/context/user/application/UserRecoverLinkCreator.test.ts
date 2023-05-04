@@ -1,6 +1,6 @@
 import { config } from '../../../../src/config';
 
-import { BcryptRepository } from '../../../../src/contexts/shared/infrastructure/crypt/BcryptRepository';
+import { JwtRepository } from '../../../../src/contexts/shared/infrastructure/jsonWebTokens/JwtRepository';
 import { InvalidArgumentError } from '../../../../src/contexts/shared/domain';
 import { NodeMailerRepository } from '../../../../src/contexts/shared/infrastructure';
 
@@ -8,7 +8,7 @@ import { UserRecoverLinkCreator } from '../../../../src/contexts/user/applicatio
 import { MongoUserRepository } from '../../../../src/contexts/user/infrastructure/persistance/MongoUserRepository';
 
 const mongoUserRepository = new MongoUserRepository();
-const bcryptRepository = new BcryptRepository();
+const jwtRepository = new JwtRepository(config.jwtSecret);
 const mailRepository = new NodeMailerRepository(
 	config.sendMails,
 	config.mailHost,
@@ -23,8 +23,9 @@ describe('Invoke', () => {
 			const userRecoverLinkCreator = new UserRecoverLinkCreator(
 				mongoUserRepository,
 				mailRepository,
-				bcryptRepository,
-				''
+				jwtRepository,
+				'',
+				config.recoverLinkExpiration
 			);
 		} catch (error) {
 			expect(error).toBeInstanceOf(InvalidArgumentError);
@@ -39,8 +40,9 @@ describe('Invoke', () => {
 			const userRecoverLinkCreator = new UserRecoverLinkCreator(
 				mongoUserRepository,
 				mailRepository,
-				bcryptRepository,
-				'somebademail'
+				jwtRepository,
+				'somebademail',
+				config.recoverLinkExpiration
 			);
 		} catch (error) {
 			expect(error).toBeInstanceOf(InvalidArgumentError);
@@ -55,8 +57,9 @@ describe('Invoke', () => {
 			const userRecoverLinkCreator = new UserRecoverLinkCreator(
 				mongoUserRepository,
 				mailRepository,
-				bcryptRepository,
-				'unexisting@email.com'
+				jwtRepository,
+				'unexisting@email.com',
+				config.recoverLinkExpiration
 			);
 			await userRecoverLinkCreator.invoke();
 		} catch (error) {
@@ -71,8 +74,9 @@ describe('Invoke', () => {
 		const userRecoverLinkCreator = new UserRecoverLinkCreator(
 			mongoUserRepository,
 			mailRepository,
-			bcryptRepository,
-			'tony402@gmail.com'
+			jwtRepository,
+			'tony402@gmail.com',
+			config.recoverLinkExpiration
 		);
 		const user = await userRecoverLinkCreator.invoke();
 		expect(user?.recoverLink).toBeDefined();
