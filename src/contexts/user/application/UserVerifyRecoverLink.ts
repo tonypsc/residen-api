@@ -23,9 +23,9 @@ class UserVerifyRecoverLink {
 		const userGetById = new UserGetById(this._userRepository, userId);
 
 		// verify user exists
-		await userGetById.invoke();
+		const user = await userGetById.invoke();
 
-		return userId;
+		return user;
 	}
 }
 

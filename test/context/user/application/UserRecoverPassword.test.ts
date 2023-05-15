@@ -74,3 +74,31 @@ describe('constructor', () => {
 		}
 	});
 });
+
+describe('invoke', () => {
+	test('should change pass', async () => {
+		const generatedToken = jwtRepository.generate(
+			'1c388a3e-da4f-4145-a938-b4f9a80107b2'
+		);
+
+		const newPassword = 'Okpassword.123';
+
+		const userRecoverPassword = new UserRecoverPassword(
+			userRepository,
+			jwtRepository,
+			bcryptRepository,
+			newPassword,
+			newPassword,
+			generatedToken,
+			true
+		);
+
+		const user = await userRecoverPassword.invoke();
+		const result = await bcryptRepository.compare(
+			newPassword,
+			user?.toPrimitives().password ?? ''
+		);
+
+		expect(result).toBe(true);
+	});
+});

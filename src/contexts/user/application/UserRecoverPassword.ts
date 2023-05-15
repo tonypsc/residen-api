@@ -40,20 +40,17 @@ class UserRecoverPassword {
 			this._recoverlink
 		);
 
-		const userId = await userVerifyRecoverLink.invoke();
-
-		const userGetById = new UserGetById(this._userRepository, userId);
-		const user = await userGetById.invoke();
+		const user = await userVerifyRecoverLink.invoke();
 
 		if (user) {
 			// Create new password
 			user.setCryptedPassword(
 				this._cryptRepository.generateHash(this._password.value)
 			);
-			const userDto = user.toPrimitives();
-			await this._userRepository.save(User.fromDto(userDto));
-			return userId;
+			await this._userRepository.save(user);
 		}
+
+		return user;
 	}
 }
 
