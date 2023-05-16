@@ -44,13 +44,16 @@ export class MongoUserRepository
 		return results.map((dto) => User.fromDto(dto));
 	}
 
-	async getOne(filtersMap: Record<string, FilterValueType>[]) {
+	async getOne(
+		filtersMap: Record<string, FilterValueType>[],
+		throwError: boolean = true
+	) {
 		const filters = Filters.fromValues(filtersMap);
 		const result = await this.findOne<UserDto>(
 			new Criteria(filters, Order.none())
 		);
-		if (!result) throw new NotFoundException('user');
-		return User.fromDto(result);
+		if (!result && throwError) throw new NotFoundException('user');
+		return result ? User.fromDto(result) : null;
 	}
 
 	async getById(id: string) {
