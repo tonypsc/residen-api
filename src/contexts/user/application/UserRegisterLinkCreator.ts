@@ -1,0 +1,3 @@
+class UserRegisterLinkCreator {}
+
+export { UserRegisterLinkCreator };
