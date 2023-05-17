@@ -45,7 +45,11 @@ class UserRecoverLinkCreator {
 		if (user) {
 			// Send the mail
 			//TODO: pass language aware message
-			await this._mailRepository.sendMail(this._email.value);
+			await this._mailRepository.sendMail(
+				this._email.value,
+				'Recover password',
+				recoverLink
+			);
 			return true;
 		}
 	}

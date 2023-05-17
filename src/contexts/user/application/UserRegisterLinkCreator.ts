@@ -1,3 +1,0 @@
-class UserRegisterLinkCreator {}
-
-export { UserRegisterLinkCreator };
