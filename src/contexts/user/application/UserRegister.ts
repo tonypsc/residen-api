@@ -1,3 +1,4 @@
+import { TemplateRepository } from '../../shared/infrastructure';
 import { CryptRepository } from '../../shared/infrastructure/crypt/CryptRepository';
 import { JwtRepository } from '../../shared/infrastructure/jsonWebTokens/JwtRepository';
 import { MailRepository } from '../../shared/infrastructure/mail/MailRepository';
@@ -11,6 +12,7 @@ class UserRegister {
 	private _jwtRepository: JwtRepository;
 	private _linkExpirationTime: string;
 	private _mailRepository: MailRepository;
+	private _recoverUrl: string;
 
 	constructor(
 		userRepository: UserRepository,
@@ -18,7 +20,8 @@ class UserRegister {
 		jwtRepository: JwtRepository,
 		mailRepository: MailRepository,
 		user: User,
-		linkExpirationTime: string
+		linkExpirationTime: string,
+		recoverUrl: string
 	) {
 		this._userRepository = userRepository;
 		this._cryptRepository = cryptRepository;
@@ -26,6 +29,7 @@ class UserRegister {
 		this._mailRepository = mailRepository;
 		this._user = user;
 		this._linkExpirationTime = linkExpirationTime;
+		this._recoverUrl = recoverUrl;
 	}
 
 	public async invoke() {
@@ -40,14 +44,29 @@ class UserRegister {
 
 		// Generate registration link
 		if (user) {
+			const userDto = user?.toPrimitives();
+
 			const recoverLink = this._jwtRepository.generate(
-				user?.toPrimitives()._id!,
+				userDto._id,
 				this._linkExpirationTime
 			);
+
+			// Prepare email template
+			const templateRepository = new TemplateRepository('register-email');
+			const replaces = new Map<string, string>([
+				['name', userDto.name],
+				['appname', 'Residen'],
+				['recover-link', `${this._recoverUrl}/${recoverLink}`],
+			]);
+
+			const mailBody = templateRepository.generate(replaces);
+
+			console.log(mailBody);
+
 			await this._mailRepository.sendMail(
 				user.toPrimitives().email,
-				'Residen registration',
-				recoverLink
+				'Residen user register cofirmation',
+				mailBody
 			);
 		}
 

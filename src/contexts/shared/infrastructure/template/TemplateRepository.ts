@@ -1,5 +1,5 @@
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 class TemplateRepository {
 	private _templateFullName: string;
@@ -7,7 +7,7 @@ class TemplateRepository {
 	TEMPLATE_EXTENSION = '.tpl';
 
 	constructor(templateName: string) {
-		this._templateFullName = templateName;
+		this._templateFullName = templateName + this.TEMPLATE_EXTENSION;
 	}
 
 	/**
@@ -16,16 +16,20 @@ class TemplateRepository {
 	 *
 	 * @param replaces, List of variable names and values to replace in the template
 	 */
-	generate(replaces: Map<string, string>) {
-		if (!fs.existsSync(this._templateFullName)) return '';
+	generate(replaces?: Map<string, string>) {
+		const fullFileName = path.resolve(__dirname, this._templateFullName);
+		if (!fs.existsSync(fullFileName)) return '';
 
-		let templateString = fs.readFileSync(this._templateFullName).toString();
+		let templateString = fs.readFileSync(fullFileName).toString();
 
-		for (let entry of replaces.entries()) {
-			const regexp = new RegExp(`{${entry[0]}}`, 'gi');
-			templateString = templateString.replace(regexp, entry[1]);
+		if (replaces) {
+			for (let entry of replaces.entries()) {
+				const regexp = new RegExp(`{${entry[0]}}`, 'gi');
+				templateString = templateString.replace(regexp, entry[1]);
+			}
 		}
-
 		return templateString;
 	}
 }
+
+export { TemplateRepository };

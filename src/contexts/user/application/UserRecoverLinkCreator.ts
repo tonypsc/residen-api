@@ -5,6 +5,7 @@ import { UserEmail } from '../../user/domain/UserEmail';
 import { JwtRepository } from '../../shared/infrastructure/jsonWebTokens/JwtRepository';
 import { NotFoundException } from '../../shared/domain';
 import { User } from '../domain';
+import { TemplateRepository } from '../../shared/infrastructure';
 
 class UserRecoverLinkCreator {
 	private _mailRepository: MailRepository;
