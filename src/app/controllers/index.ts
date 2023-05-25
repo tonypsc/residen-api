@@ -7,6 +7,7 @@ import { UserVerifyRecoverLinkController } from './user/UserVerifyRecoverLinkCon
 import { UserVerifyEmailExistsController } from './user/UserVerifyEmailExistsController';
 import { UserRecoverPasswordController } from './user/UserRecoverPasswordController';
 import { UserRegisterController } from './user/UserRegisterController';
+import { UserConfirmRegistrationController } from './user/UserConfirmRegistrationController';
 
 export {
 	UserPostController,
@@ -17,4 +18,5 @@ export {
 	UserVerifyEmailExistsController,
 	UserRecoverPasswordController,
 	UserRegisterController,
+	UserConfirmRegistrationController,
 };
