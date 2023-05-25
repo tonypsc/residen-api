@@ -81,6 +81,10 @@ class User extends AggregateRoot {
 		};
 	}
 
+	setStatus(status: UserPosibleStatus) {
+		this._status = new UserStatus(status);
+	}
+
 	setCryptedPassword(password: string) {
 		this._password = new UserPassword(password, false);
 	}

@@ -4,6 +4,7 @@ import { CryptRepository } from '../../shared/infrastructure/crypt/CryptReposito
 import { JwtRepository } from '../../shared/infrastructure/jsonWebTokens/JwtRepository';
 import { MailRepository } from '../../shared/infrastructure/mail/MailRepository';
 import { UserRepository, User } from '../domain';
+import { UserPosibleStatus } from '../domain/UserStatus';
 import { UserCreator, UserRemover } from './';
 
 class UserRegister {
@@ -11,9 +12,9 @@ class UserRegister {
 	private _userRepository: UserRepository;
 	private _cryptRepository: CryptRepository;
 	private _jwtRepository: JwtRepository;
-	private _linkExpirationTime: string;
+	private _linkExpirationTime?: string;
 	private _mailRepository: MailRepository;
-	private _recoverUrl: string;
+	private _registerUrl: string;
 
 	constructor(
 		userRepository: UserRepository,
@@ -21,19 +22,22 @@ class UserRegister {
 		jwtRepository: JwtRepository,
 		mailRepository: MailRepository,
 		user: User,
-		linkExpirationTime: string,
-		recoverUrl: string
+		registerUrl: string,
+		linkExpirationTime?: string
 	) {
 		this._userRepository = userRepository;
 		this._cryptRepository = cryptRepository;
 		this._jwtRepository = jwtRepository;
 		this._mailRepository = mailRepository;
 		this._user = user;
+		this._registerUrl = registerUrl;
 		this._linkExpirationTime = linkExpirationTime;
-		this._recoverUrl = recoverUrl;
 	}
 
 	public async invoke() {
+		// Set user status to unconfirmed
+		this._user?.setStatus(UserPosibleStatus.unconfirmed);
+
 		// Create new user
 		const userCreator = new UserCreator(
 			this._userRepository,
@@ -58,7 +62,7 @@ class UserRegister {
 			const replaces = new Map<string, string>([
 				['name', userDto.name],
 				['appname', 'Residen'],
-				['recover-link', `${this._recoverUrl}/${recoverLink}`],
+				['recover-link', `${this._registerUrl}/${recoverLink}`],
 			]);
 
 			const mailBody = templateRepository.generate(replaces);
