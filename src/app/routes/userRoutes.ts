@@ -9,6 +9,7 @@ import {
 	UserGenerateRecoverLinkController,
 	UserVerifyRecoverLinkController,
 	UserVerifyEmailExistsController,
+	UserRecoverPasswordController,
 } from '../controllers';
 
 const userRouter = Express.Router();
@@ -19,6 +20,7 @@ const userGenerateRecoverLinkController =
 	new UserGenerateRecoverLinkController();
 const userVerifyRecoverLinkController = new UserVerifyRecoverLinkController();
 const userVerifyEmailExistsController = new UserVerifyEmailExistsController();
+const userRecoverPasswordController = new UserRecoverPasswordController();
 
 // Unsecured
 userRouter.post('/login', Captcha.verify, userLoginController.run);
@@ -36,6 +38,11 @@ userRouter.post(
 	'/emailexists',
 	Captcha.verify,
 	userVerifyEmailExistsController.run
+);
+userRouter.post(
+	'/confirmrecover',
+	Captcha.verify,
+	userRecoverPasswordController.run
 );
 
 // Secured
