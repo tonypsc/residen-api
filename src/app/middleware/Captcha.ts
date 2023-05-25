@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { config } from '../../config';
-import { AuthorizationException } from '../../contexts/shared/domain';
 
 class Captcha {
 	public static async verify(req: Request, res: Response, next: NextFunction) {
