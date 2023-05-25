@@ -90,6 +90,23 @@ describe('Invoke', () => {
 		}
 	});
 
+	test('should throw (User not active) for unconfirmed user', async () => {
+		try {
+			const userLogin = new UserLogin(
+				mongoUserRepository,
+				bcryptRepository,
+				'unconfirmed@residen.com',
+				'123456'
+			);
+			const result = await userLogin.invoke();
+		} catch (error) {
+			expect(error).toBeInstanceOf(Error);
+			if (error instanceof Error) {
+				expect(error.message).toBe('User not active');
+			}
+		}
+	});
+
 	test('should return (user) for right credentials', async () => {
 		const userLogin = new UserLogin(
 			mongoUserRepository,

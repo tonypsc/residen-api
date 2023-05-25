@@ -5,6 +5,7 @@ import { AuthorizationException } from '../../shared/domain';
 import { UserRepository } from '../domain';
 import { UserEmail } from '../domain/UserEmail';
 import { UserPassword } from '../domain/UserPassword';
+import { UserPosibleStatus } from '../domain/UserStatus';
 
 class UserLogin {
 	private userRepository: UserRepository;
@@ -39,8 +40,16 @@ class UserLogin {
 			this._password.value,
 			user?.toPrimitives().password!
 		);
-		if (result) return user;
-		throw new AuthorizationException('Invalid credentials');
+
+		if (!result) {
+			throw new AuthorizationException('Invalid credentials');
+		}
+
+		if (user?.toPrimitives().status !== UserPosibleStatus.active) {
+			throw new AuthorizationException('User not active');
+		}
+
+		return user;
 	}
 }
 
