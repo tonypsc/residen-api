@@ -63,7 +63,8 @@ export class MongoUserRepository
 	}
 
 	async delete(id: string) {
-		await this.removeById(id);
+		const result = await this.removeById(id);
+		return result?.deletedCount === 1;
 	}
 
 	moduleName(): string {

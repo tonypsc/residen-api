@@ -4,7 +4,7 @@ import { CryptRepository } from '../../shared/infrastructure/crypt/CryptReposito
 import { JwtRepository } from '../../shared/infrastructure/jsonWebTokens/JwtRepository';
 import { MailRepository } from '../../shared/infrastructure/mail/MailRepository';
 import { UserRepository, User } from '../domain';
-import { UserCreator } from './UserCreator';
+import { UserCreator, UserRemover } from './';
 
 class UserRegister {
 	private _user: User;
@@ -74,7 +74,14 @@ class UserRegister {
 			throw new ExecutionException('Registration process failed');
 		}
 
+		// Email could not be sent
 		if (!result) {
+			// Remove created user
+			const userRemover = new UserRemover(
+				this._userRepository,
+				user.toPrimitives()._id
+			);
+			userRemover.invoke();
 			throw new ExecutionException('Registration process failed');
 		}
 

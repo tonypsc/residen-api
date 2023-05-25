@@ -15,5 +15,5 @@ export interface UserRepository {
 		filtersMap: Record<string, FilterValueType>[],
 		throwError?: boolean
 	): Promise<User | null>;
-	delete(userId: string): Promise<void>;
+	delete(userId: string): Promise<boolean>;
 }

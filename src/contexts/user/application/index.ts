@@ -8,6 +8,7 @@ import { UserVerifyRecoverLink } from './UserVerifyRecoverLink';
 import { UserRecoverPassword } from './UserRecoverPassword';
 import { UserRegister } from './UserRegister';
 import { UserExistingEmailVerifier } from './UserExistingEmailVerifier';
+import { UserRemover } from './UserRemover';
 
 export {
 	UserCreator,
@@ -20,4 +21,5 @@ export {
 	UserRecoverPassword,
 	UserRegister,
 	UserExistingEmailVerifier,
+	UserRemover,
 };
