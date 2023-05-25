@@ -6,6 +6,7 @@ import { UserGenerateRecoverLinkController } from './user/UserGenerateRecoverLin
 import { UserVerifyRecoverLinkController } from './user/UserVerifyRecoverLinkController';
 import { UserVerifyEmailExistsController } from './user/UserVerifyEmailExistsController';
 import { UserRecoverPasswordController } from './user/UserRecoverPasswordController';
+import { UserRegisterController } from './user/UserRegisterController';
 
 export {
 	UserPostController,
@@ -15,4 +16,5 @@ export {
 	UserVerifyRecoverLinkController,
 	UserVerifyEmailExistsController,
 	UserRecoverPasswordController,
+	UserRegisterController,
 };
