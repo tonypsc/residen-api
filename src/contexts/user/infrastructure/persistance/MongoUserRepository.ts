@@ -61,6 +61,11 @@ export class MongoUserRepository
 		if (!result) throw new NotFoundException('user');
 		return User.fromDto(result);
 	}
+
+	async delete(id: string) {
+		await this.removeById(id);
+	}
+
 	moduleName(): string {
 		return 'user';
 	}

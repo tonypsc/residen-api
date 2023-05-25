@@ -1,3 +1,4 @@
+import { ExecutionException } from '../../shared/domain';
 import { TemplateRepository } from '../../shared/infrastructure';
 import { CryptRepository } from '../../shared/infrastructure/crypt/CryptRepository';
 import { JwtRepository } from '../../shared/infrastructure/jsonWebTokens/JwtRepository';
@@ -41,6 +42,7 @@ class UserRegister {
 		);
 
 		const user = await userCreator.invoke();
+		let result = true;
 
 		// Generate registration link
 		if (user) {
@@ -61,13 +63,19 @@ class UserRegister {
 
 			const mailBody = templateRepository.generate(replaces);
 
-			console.log(mailBody);
-
-			await this._mailRepository.sendMail(
+			result = await this._mailRepository.sendMail(
 				user.toPrimitives().email,
 				'Residen user register cofirmation',
 				mailBody
 			);
+		}
+
+		if (!user) {
+			throw new ExecutionException('Registration process failed');
+		}
+
+		if (!result) {
+			throw new ExecutionException('Registration process failed');
 		}
 
 		return user;

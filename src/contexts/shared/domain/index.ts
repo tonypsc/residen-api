@@ -7,6 +7,7 @@ import { InvalidArgumentError } from './exceptions/InvalidArgumentError';
 import { NotFoundException } from './exceptions/NotFoundException';
 import { AuthorizationException } from './exceptions/AuthorizationException';
 import { EmailException } from './exceptions/EmailException';
+import { ExecutionException } from './exceptions/ExecutionException';
 
 import { AggregateRoot } from './AggregateRoot';
 import { DateNumberValueObject } from './DateNumberValueObject';
@@ -31,4 +32,5 @@ export {
 	NonEmptyStringValue,
 	MoneyValueObject,
 	EmailException,
+	ExecutionException,
 };

@@ -61,4 +61,10 @@ export abstract class MongoRepository<T extends AggregateRoot> {
 
 		return result.upsertedId ? result.upsertedId.toString() : id;
 	}
+
+	protected async removeById(id: string) {
+		await this._client.connect();
+		const collection = this.collection();
+		return await collection.deleteOne({ _id: id });
+	}
 }
