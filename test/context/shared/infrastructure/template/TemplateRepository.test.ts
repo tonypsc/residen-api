@@ -13,7 +13,7 @@ describe('generate', () => {
 		expect(result.includes('<!DOCTYPE html>')).toBe(true);
 	});
 
-	test('should return string with john doe for register-email and name=john doe', () => {
+	test('should return string with john doe for register-email and name john doe', () => {
 		const templateRepository = new TemplateRepository('register-email');
 		const result = templateRepository.generate(new Map([['name', 'john doe']]));
 		expect(result.includes('john doe')).toBe(true);
