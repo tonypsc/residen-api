@@ -7,3 +7,5 @@ class Condo extends AggregateRoot {
 
 	toPrimitives() {}
 }
+
+export { Condo };
