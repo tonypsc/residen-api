@@ -1,0 +1,3 @@
+class CondoUsers {}
+
+export { CondoUsers };
