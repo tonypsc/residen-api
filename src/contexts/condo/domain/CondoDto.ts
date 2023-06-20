@@ -1,8 +1,13 @@
-interface CodoDto {
+import { UserDto } from '../../user/domain';
+
+interface CondoDto {
 	condoId: string;
 	condoName: string;
-	condoOwner: string;
-	condoManager: string;
-	condoAddress: string;
-	condoUsers: string[];
+	condoOwner: UserDto;
+	condoManager: UserDto;
+	condoAddress?: string;
+	condoUsers: UserDto[];
+	condoPhoto?: string;
 }
+
+export { CondoDto };

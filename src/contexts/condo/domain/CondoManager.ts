@@ -1,5 +1,5 @@
-import { StringValueObject } from '../../shared/domain';
+import { User } from '../../user/domain';
 
-class CondoManagerId extends StringValueObject {}
+class CondoManager extends User {}
 
-export { CondoManagerId };
+export { CondoManager };
