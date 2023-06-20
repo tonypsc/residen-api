@@ -7,6 +7,7 @@ import { CondoName } from './CondoName';
 import { CondoOwner } from './CondoOwner';
 import { CondoPhoto } from './CondoPhoto';
 import { CondoUsers } from './CondoUsers';
+import { User } from '../../user/domain';
 
 class Condo extends AggregateRoot {
 	private condoId: CondoId;
@@ -48,7 +49,19 @@ class Condo extends AggregateRoot {
 		};
 	}
 
-	fromPrimitives(condoDto: CondoDto) {}
+	static fromPrimitives(condoDto: CondoDto) {
+		return new Condo(
+			new CondoId(condoDto.condoId),
+			new CondoName(condoDto.condoName),
+			User.fromDto(condoDto.condoManager),
+			User.fromDto(condoDto.condoOwner),
+			condoDto.condoUsers.map((user) => User.fromDto(user)),
+			condoDto.condoAddress
+				? new CondoAddress(condoDto.condoAddress)
+				: undefined,
+			condoDto.condoPhoto ? new CondoPhoto(condoDto.condoPhoto) : undefined
+		);
+	}
 }
 
 export { Condo };
