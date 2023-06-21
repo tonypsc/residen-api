@@ -1,0 +1,3 @@
+class MongoCondoRepository {}
+
+export { MongoCondoRepository };
