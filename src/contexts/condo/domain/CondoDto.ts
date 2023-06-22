@@ -1,7 +1,7 @@
 import { UserDto } from '../../user/domain';
 
 interface CondoDto {
-	condoId: string;
+	_id: string;
 	condoName: string;
 	condoOwner: UserDto;
 	condoManager: UserDto;

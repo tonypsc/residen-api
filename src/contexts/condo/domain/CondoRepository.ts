@@ -13,7 +13,7 @@ interface CondoRepository {
 	getOne(
 		filtersMap: Record<string, FilterValueType>[],
 		throwError?: boolean
-	): Promise<Condo>;
+	): Promise<Condo | null>;
 	delete(condoId: string): Promise<boolean>;
 }
 

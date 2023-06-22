@@ -39,7 +39,7 @@ class Condo extends AggregateRoot {
 
 	toPrimitives(): CondoDto {
 		return {
-			condoId: this.condoId.value,
+			_id: this.condoId.value,
 			condoName: this.condoName.value,
 			condoManager: this.condoManager.toPrimitives(),
 			condoOwner: this.condoOwner.toPrimitives(),
@@ -51,7 +51,7 @@ class Condo extends AggregateRoot {
 
 	static fromPrimitives(condoDto: CondoDto) {
 		return new Condo(
-			new CondoId(condoDto.condoId),
+			new CondoId(condoDto._id),
 			new CondoName(condoDto.condoName),
 			User.fromDto(condoDto.condoManager),
 			User.fromDto(condoDto.condoOwner),
