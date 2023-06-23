@@ -1,3 +1,4 @@
 import { Condo } from './Condo';
+import { CondoDto } from './CondoDto';
 
-export { Condo };
+export { CondoDto };
