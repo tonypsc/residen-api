@@ -32,6 +32,15 @@ class Movement extends AggregateRoot {
 			client: this.client.toPrimitives(),
 		};
 	}
+
+	static fromPrimitives(dto: MovementDto): Movement {
+		return new Movement(
+			dto._id,
+			dto.type,
+			dto.occurrence,
+			Client.fromPrimitives(dto.client)
+		);
+	}
 }
 
 export { Movement };
