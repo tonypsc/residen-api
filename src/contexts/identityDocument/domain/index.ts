@@ -1,4 +1,5 @@
 import { IdentityDocument } from './IdentityDocument';
 import { IdentityDocumentDto } from './IdentityDocumentDto';
+import { IdentityDocumentTypes } from './IdentityDocumentTypes';
 
-export { IdentityDocument, IdentityDocumentDto };
+export { IdentityDocument, IdentityDocumentDto, IdentityDocumentTypes };
