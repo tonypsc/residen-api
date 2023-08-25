@@ -33,6 +33,7 @@ class Movement extends AggregateRoot {
 		};
 	}
 
+	// Creates a new object from DTO
 	static fromPrimitives(dto: MovementDto): Movement {
 		return new Movement(
 			dto._id,
